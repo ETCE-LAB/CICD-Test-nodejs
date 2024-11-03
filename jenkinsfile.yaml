@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    dockerimagename = "etce-lab/cicd-test-nodejs"
+    dockerimagename = "etce-lab/cicd-test-nodejs:latest"
     dockerImage = ""
   }
   agent {
@@ -35,19 +35,25 @@ pipeline {
     stage('Build image') {
       steps{
         container('docker'){
-          sh 'docker build -t etce-lab/cicd-test-nodejs .'
+          sh 'docker build -t ${dockerimagename} .'
+        }
+      }
+    }
+    stage('Login to private docker registry'){
+      steps{
+        withCredentials([usernamePassword(credentialsID: 'docker-registry-private',
+                                          usernameVariable: 'USERNAME',
+                                          passwordVariable: 'PASSWORD')]){
+          container('docker'){
+            sh 'docker login -u $USERNAME -p $PASSWORD  https://docker.registry.private'
+          }
         }
       }
     }
     stage('Pushing Image') {
-      environment {
-          registryCredential = 'docker-registry-private'
-           }
       steps{
-        script {
-          docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
-            dockerImage.push("latest")
-          }
+        container('docker'){
+          sh 'docker push ${dockerimagename}'
         }
       }
     }
@@ -59,5 +65,14 @@ pipeline {
         }
       }
     }
+  }
+  post{
+    always{
+      container('docker'){
+        sh 'docker logout'
+      }
+    }
+  }
+
   }
 }

@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: cicd-test-nodejs #The name of the react.js application container
-        #The Docker image for building the React.js application container
-        image: ETCE-LAB/CICD-Test-nodejs:latest
+        #The Docker image for building the node.js application container
+        image: etce-lab/cicd-test-nodejs:latest
         ports:
-        - containerPort: 3000 #The port for the React.js application container
+        - containerPort: 3000 #The port for the node.js application container
