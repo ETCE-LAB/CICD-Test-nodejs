@@ -41,7 +41,7 @@ pipeline {
     }
     stage('Login to private docker registry'){
       steps{
-        withCredentials([usernamePassword(credentialsID: 'docker-registry-private',
+        withCredentials([usernamePassword(credentialsId: 'docker-registry-private',
                                           usernameVariable: 'USERNAME',
                                           passwordVariable: 'PASSWORD')]){
           container('docker'){
