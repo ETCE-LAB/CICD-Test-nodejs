@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    dockerimagename = "etce-lab/CICD-Test-nodejs"
+    dockerimagename = "ETCE-LAB/cicd-test-nodejs"
     dockerImage = ""
   }
   agent {
@@ -35,7 +35,7 @@ pipeline {
     stage('Build image') {
       steps{
         container('docker'){
-          sh 'docker build -t etce-lab/CICD-Test-nodejs .'
+          sh 'docker build -t ETCE-LAB/cicd-test-nodejs .'
         }
       }
     }
