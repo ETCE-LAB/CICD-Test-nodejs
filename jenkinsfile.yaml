@@ -1,0 +1,41 @@
+pipeline {
+  environment {
+    dockerimagename = "ETCE-LAB/CICD-Test-nodejs"
+    dockerImage = ""
+  }
+  agent any
+  stages {
+    stage('Checkout Source') {
+      steps {
+        git 'https://github.com/ETCE-LAB/CICD-Test-nodejs.git'
+      }
+    }
+    stage('Build image') {
+      steps{
+        script {
+          dockerImage = docker.build dockerimagename
+        }
+      }
+    }
+    stage('Pushing Image') {
+      environment {
+          registryCredential = 'docker-registry-private'
+           }
+      steps{
+        script {
+          docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
+            dockerImage.push("latest")
+          }
+        }
+      }
+    }
+    stage('Deploying nodejs container to Kubernetes') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "deployment.yaml",
+                                         "service.yaml")
+        }
+      }
+    }
+  }
+}
