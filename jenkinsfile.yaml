@@ -3,7 +3,10 @@ pipeline {
     dockerimagename = "ETCE-LAB/CICD-Test-nodejs"
     dockerImage = ""
   }
-  agent any
+  agent {
+        kubernetes {
+            defaultContainer 'jnlp'
+        }
   stages {
     stage('Checkout Source') {
       steps {
