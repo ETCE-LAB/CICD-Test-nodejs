@@ -8,6 +8,7 @@ pipeline {
     stage('Checkout Source') {
       steps {
         git 'https://github.com/ETCE-LAB/CICD-Test-nodejs.git'
+        branch 'main'
       }
     }
     stage('Build image') {
