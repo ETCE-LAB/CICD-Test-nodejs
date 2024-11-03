@@ -11,8 +11,8 @@ pipeline {
         spec:
           containers:
           - name: docker
-          image: docker:latest
-          command:
+            image: docker:latest
+            command:
             - cat
             tty: true
             volumeMounts:
