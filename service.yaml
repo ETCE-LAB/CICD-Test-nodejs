@@ -4,6 +4,7 @@ metadata:
   #The name of the Kubernetes Service to be created
   #in the Kubernetes cluster
   name: cicd-test-nodejs-service
+  namespace: cicd-test
 spec:
   selector:
     app: cicd-test-nodejs
