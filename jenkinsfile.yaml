@@ -2,7 +2,7 @@ pipeline {
   environment {
     dockerregistry = "https://registry.etce.isse.tu-clausthal.de"
     dockerregistrycredential = "docker-registry-private"
-    dockerimagename = "cicd-test-nodejs:latest"
+    dockerimagename = "registry.etce.isse.tu-clausthal.de/etce-lab/cicd-test-nodejs:latest"
     dockerImage = ""
   }
   agent any
@@ -31,7 +31,7 @@ pipeline {
     }
     stage('Remove Unused docker image'){
       steps{
-        sh 'docker rmi $dockerimagename:latest'
+        sh 'docker rmi $dockerimagename'
       }
     }
   }
