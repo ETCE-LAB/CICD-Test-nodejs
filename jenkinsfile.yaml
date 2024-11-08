@@ -1,6 +1,7 @@
 pipeline {
   environment {
     dockerregistry = "https://registry.etce.isse.tu-clausthal.de"
+    dockerregistrycredential = "docker-registry-private"
     dockerimagename = "etce-lab/cicd-test-nodejs:latest"
     dockerImage = ""
   }
@@ -22,7 +23,7 @@ pipeline {
     stage('Deploy Image'){
       steps{
         script{
-          docker.withRegistry('', "docker-registry-private"){
+          docker.withRegistry(${dockerregistry}, ${dockerregistrycredential}){
           docker.Image.push("$BUILD_NUMBER")
           docker.Image.push('latest')
           }
