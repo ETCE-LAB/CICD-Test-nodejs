@@ -2,7 +2,7 @@ pipeline {
   environment {
     dockerregistry = "https://registry.etce.isse.tu-clausthal.de"
     dockerregistrycredential = "docker-registry-private"
-    dockerimagename = "etce-lab/cicd-test-nodejs:latest"
+    dockerimagename = "cicd-test-nodejs:latest"
     dockerImage = ""
   }
   agent any
