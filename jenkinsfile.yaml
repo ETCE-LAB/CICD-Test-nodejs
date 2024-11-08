@@ -16,7 +16,7 @@ pipeline {
     stage('Build image') {
       steps{
         script{
-        dockerImage = docker.build(dockerimagename)
+        dockerImage = docker.build(dockerimagename +  ":latest")
         }
       }
     }
@@ -24,14 +24,14 @@ pipeline {
       steps{
         script{
           docker.withRegistry(dockerregistry, dockerregistrycredential){
-          docker.Image.push('latest')
+          dockerImage.push()
           }
         }
       }
     }
     stage('Remove Unused docker image'){
       steps{
-        sh 'docker rmi dockerimagename:latest'
+        sh 'docker rmi $dockerimagename:latest'
       }
     }
   }
