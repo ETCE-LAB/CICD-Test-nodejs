@@ -1,0 +1,17 @@
+name: ci
+
+on:
+  push:
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Login to Docker Registry
+        uses: docker/login-action@v3
+        with:
+          registry-auth: |
+          - registry: https://registry.etce.isse.tu-clausthal.de
+            username: ${{ vars.jenkins }}
+            password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
